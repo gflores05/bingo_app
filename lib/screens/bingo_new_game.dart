@@ -34,7 +34,7 @@ class BingoNewGame extends StatelessWidget {
                   db
                       .collection('bingo')
                       .doc('current')
-                      .update(BingoGame(type: item.type).toDoc());
+                      .set(BingoGame(type: item.type).toDoc());
                   Navigator.of(context)
                       .pushReplacementNamed(BingoTable.routeName);
                 },

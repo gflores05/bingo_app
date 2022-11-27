@@ -75,7 +75,7 @@ class BingoTableState extends State<BingoTable>
         children: [
           for (final tab in bingoCells.keys)
             Center(
-              child: BingoGrid(numbers: bingoCells[tab]!),
+              child: BingoGrid(letter: tab, numbers: bingoCells[tab]!),
             ),
         ],
       ),
