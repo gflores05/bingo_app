@@ -3,13 +3,17 @@
 // found in the LICENSE file.
 
 import 'package:bingo_app/constants.dart';
+import 'package:bingo_app/models/bingo_game.dart';
 import 'package:bingo_app/screens/bingo_table.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class BingoNewGame extends StatelessWidget {
   static const routeName = '/new';
 
-  const BingoNewGame({Key? key}) : super(key: key);
+  FirebaseFirestore db = FirebaseFirestore.instance;
+
+  BingoNewGame({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +27,14 @@ class BingoNewGame extends StatelessWidget {
           restorationId: 'bingo_new_game',
           padding: const EdgeInsets.symmetric(vertical: 8),
           children: [
-            for (final gameMode in gameModes)
+            for (final item in gameModes)
               ListTile(
-                title: Text(gameMode),
+                title: Text(item.title),
                 onTap: () {
+                  db
+                      .collection('bingo')
+                      .doc('current')
+                      .update(BingoGame(type: item.type).toDoc());
                   Navigator.of(context)
                       .pushReplacementNamed(BingoTable.routeName);
                 },
