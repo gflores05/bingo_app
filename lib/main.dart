@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         // This is the theme of your application.
         primarySwatch: Palette.red,
       ),
-      home: BingoNewGame(),
+      home: const BingoRaffle(),
       routes: {
         BingoNewGame.routeName: (ctx) => BingoNewGame(),
         BingoTable.routeName: (ctx) => const BingoTable(),
