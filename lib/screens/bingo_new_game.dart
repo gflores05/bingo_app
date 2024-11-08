@@ -4,14 +4,14 @@
 
 import 'package:bingo_app/constants.dart';
 import 'package:bingo_app/models/bingo_game.dart';
-import 'package:bingo_app/screens/bingo_table.dart';
+import 'package:bingo_app/screens/bingo_raffle.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class BingoNewGame extends StatelessWidget {
   static const routeName = '/new';
 
-  FirebaseFirestore db = FirebaseFirestore.instance;
+  final FirebaseFirestore db = FirebaseFirestore.instance;
 
   BingoNewGame({Key? key}) : super(key: key);
 
@@ -36,7 +36,7 @@ class BingoNewGame extends StatelessWidget {
                       .doc('current')
                       .set(BingoGame(type: item.type).toDoc());
                   Navigator.of(context)
-                      .pushReplacementNamed(BingoTable.routeName);
+                      .pushReplacementNamed(BingoRaffle.routeName);
                 },
                 subtitle: null,
               ),

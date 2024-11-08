@@ -1,5 +1,6 @@
 import 'package:bingo_app/config/palette.dart';
 import 'package:bingo_app/screens/bingo_new_game.dart';
+import 'package:bingo_app/screens/bingo_raffle.dart';
 import 'package:bingo_app/screens/bingo_table.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -28,7 +29,8 @@ class MyApp extends StatelessWidget {
       home: BingoNewGame(),
       routes: {
         BingoNewGame.routeName: (ctx) => BingoNewGame(),
-        BingoTable.routeName: (ctx) => const BingoTable()
+        BingoTable.routeName: (ctx) => const BingoTable(),
+        BingoRaffle.routeName: (ctx) => const BingoRaffle()
       },
     );
   }
