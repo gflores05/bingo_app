@@ -15,6 +15,6 @@ class BingoGame {
   BingoGame({required this.type});
 
   Map<String, Object> toDoc() {
-    return {'type': type.index, ...table};
+    return {'type': type.index, 'last': '', 'spinning': false, ...table};
   }
 }

@@ -7,6 +7,7 @@ import 'package:bingo_app/screens/bingo_new_game.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'dart:async';
 
 class BingoRaffle extends StatelessWidget {
   static const routeName = '/raffle';
@@ -54,13 +55,13 @@ class BingoRaffleGenerator extends StatefulWidget {
 class _BingoRaffleGeneratorState extends State<BingoRaffleGenerator> {
   final FirebaseFirestore db = FirebaseFirestore.instance;
 
-  String lastNumber = '';
-
   int random(int min, int max) {
     return min + Random().nextInt(max - min);
   }
 
   void generateNumber() {
+    FirebaseFirestore.instance.doc('bingo/current').update({"spinning": true});
+
     final letters = ['B', 'I', 'N', 'G', 'O'];
 
     bool generateNew = true;
@@ -80,16 +81,13 @@ class _BingoRaffleGeneratorState extends State<BingoRaffleGenerator> {
       generateNew = widget.doc[letter]![numberIndex];
     }
 
-    setState(() {
-      lastNumber = '$letter$number';
-    });
-
     final newVal = [...widget.doc[letter]];
     newVal[numberIndex] = true;
 
-    FirebaseFirestore.instance
-        .doc('bingo/current')
-        .update({letter: newVal, "last": '$letter$number'});
+    Timer(
+        const Duration(seconds: 5),
+        () => FirebaseFirestore.instance.doc('bingo/current').update(
+            {letter: newVal, "last": '$letter$number', "spinning": false}));
   }
 
   @override
@@ -99,7 +97,7 @@ class _BingoRaffleGeneratorState extends State<BingoRaffleGenerator> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Text(
-            lastNumber,
+            widget.doc['spinning'] ? 'Girando' : widget.doc['last'],
             style: const TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
           ),
           FloatingActionButton.large(
